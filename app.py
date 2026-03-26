@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from sqlalchemy import text
 
 load_dotenv()
 
@@ -22,7 +23,11 @@ def ping():
 
 @app.route('/productos')
 def productos():
-    data = df.to_dict(orient="records")
+    query = text ("""SELECT * FROM Productos""")
+
+    with engine.connect() as conn:
+        result = conn.execute(query)
+        data = [dict(row._mapping) for row in result]
 
     return jsonify({
         "code" : 200,
