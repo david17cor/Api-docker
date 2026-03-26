@@ -23,7 +23,7 @@ def ping():
 
 @app.route('/productos')
 def productos():
-    query = text ("""SELECT * FROM Productos""")
+    query = text ("""SELECT * FROM productos""")
 
     with engine.connect() as conn:
         result = conn.execute(query)
